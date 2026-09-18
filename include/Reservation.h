@@ -1,5 +1,5 @@
-#ifndef Reservation.h
-#define Reservation.h
+#ifndef Reservation_h
+#define Reservation_h
 #include <string>
 
 class Reservation {
