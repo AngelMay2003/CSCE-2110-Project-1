@@ -23,7 +23,7 @@ public:
 	std::string get_resourceType();
 
 	void set_availabilityStatus(bool status);
-	bool getavailabilityStatus();
+	bool get_availabilityStatus();
 };
 
 #endif
