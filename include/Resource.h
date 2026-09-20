@@ -1,5 +1,5 @@
-#ifndef resource_h
-#define resource_h
+#ifndef Resource_h
+#define Resource_h
 #include <string>
 
 class Resource {
