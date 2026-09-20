@@ -28,7 +28,7 @@ public:
 	std::string get_resourceID();
 
 	void set_reservationDate(std::string date);
-	std::string getreservationDate();
+	std::string get_reservationDate();
 };
 
 #endif
