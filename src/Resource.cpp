@@ -14,7 +14,7 @@ void Resource::set_resourceID(std::string id)
 	resourceID = id;
 } //changes the resourceID
 
-std::string Resource:get_resourceID()
+std::string Resource::get_resourceID()
 {
 	return resourceID;
 }//returns the new resourceID
