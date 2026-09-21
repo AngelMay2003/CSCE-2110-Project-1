@@ -156,13 +156,29 @@ int main()
         
         else if (menu == 3)
         {
+            int reservationID;
             
+            cout << endl;
+            cout << "Enter your reservation id: ";
+            cin >> reservationID;
+            
+            if (manager.findReservation(reservationID))
+            {
+                manager.removeActiveReservation(reservationID);
+                
+                cout << "Your reservation has been cancelled." << endl;
+            }
+            
+            else
+            {
+                cout << "Your reservation couldn't be found." << endl;
+            }
         }
         
         
         else if (menu == 4)
         {
-            
+            manager.displayWaitingList();
         }
         
         
@@ -174,7 +190,20 @@ int main()
             
         else if (menu = 6)
         {
+            int reservationID;
             
+            cout << "Enter your reservation id: ";
+            cin >> reservationID
+            
+            if (manager.findReservation(reservationID))
+            {
+                cout << "Your reservation has been found." << endl;
+            }
+            
+            else
+            {
+                cout << "Your reservation couldn't be found." << endl;
+            }
         }
         
         
