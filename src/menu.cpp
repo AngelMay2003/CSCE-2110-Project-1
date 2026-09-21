@@ -91,8 +91,7 @@ int main()
         cout << "4. View Waiting Lists" << endl;
         cout << "5. Undo Cancellation" << endl;
         cout << "6. Search Reservations" << endl;
-        cout << "7. Sort Resources" << endl;
-        cout << "8. Exit" << endl;
+        cout << "7. Exit" << endl;
         
         cout << "Enter your choice: ";
         
@@ -184,7 +183,20 @@ int main()
         
         else if (menu == 5)
         {
-            
+            if (!cancellationStack.empty())
+            {
+                Reservation reservation = *cancellationStack.peek();
+                
+                cancellationStack.pop();
+                
+                manager.addActiveReservation(reservation);
+                
+                cout << "Cancellation has beem undone." << endl;
+            }
+            else
+            {
+                cout << "There is nothing to undo." << endl;
+            }
         }
             
             
@@ -206,14 +218,7 @@ int main()
             }
         }
         
-        
         else if (menu = 7)
-        {
-            
-        }
-        
-        
-        else if (menu = 8)
         {
             cout << "Thanks for using our system." << endl;
         }
@@ -223,7 +228,7 @@ int main()
             cout << "Invalid: Use menu from 1-8." << endl;
         }
         
-    } while (menu != 8);
+    } while (menu != 7);
     
     return 0;
 }
