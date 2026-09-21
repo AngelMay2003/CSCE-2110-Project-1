@@ -15,7 +15,7 @@ void Reservation::set_reservationID(int id)
         reservationID = id;
 } //updates the reservationId
 
-int Reservation::get_reservationID(int id)
+int Reservation::get_reservationID()
 {
     return reservationID;
 } //returns the update reservationID
@@ -25,7 +25,7 @@ void Reservation::set_studentID(int id)
     studentID = id;
 }// updates the students id
 
-int Reservation::get_studentID()
+int Reservation::get_student()
 {
     return studentID;
 } // returns the updated student id

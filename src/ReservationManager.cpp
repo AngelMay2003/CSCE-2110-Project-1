@@ -1,4 +1,5 @@
-#include "ReservationManager" // copies the ReservationManager header file onto here
+#include "ReservationManager.h"
+#include <iostream> // copies the ReservationManager header file onto here
 
 // Constructor: this is to initialise the quene pointers alongside head
 ReservationManager::ReservationManager() : head(nullptr), waitFront(nullptr), waitRear(nullptr), waitCount(0) {}
@@ -22,12 +23,12 @@ ReservationManager::~ReservationManager() {
 
 
 // This function will insert at the head
-ReservationManager::addActiveReservation(const Reservation& reservation) {
+void ReservationManager::addActiveReservation(const Reservation& reservation) {
     Node* newNode = new Node(reservation);
     newNode->next = head;
     head = newNode;
 
-    std::cout << "Reservation " << reservation.getReservationId() << " added.\n";
+    std::cout << "Reservation " << newNode->data.get_reservationID() << " added.\n";
 }
 
 // This removes the students from waiting list
@@ -36,7 +37,7 @@ bool ReservationManager::removeActiveReservation(const std::string& reservationI
     Node* previous = nullptr;
 
     while (current != nullptr) {
-        if (current->data.getReservation() == reservationId) {
+        if (std::to_string(current->data.get_reservationID()) == reservationId) {
             if (previous == nullptr) {
                 head = current->next;
             } else {
@@ -57,7 +58,7 @@ bool ReservationManager::removeActiveReservation(const std::string& reservationI
 bool ReservationManager::findReservation(const std::string& reservationId) const {
     Node* current = head;
     while (current != nullptr) {
-        if (current->data.getReservationId() == reservationId) {
+        if (std::to_string(current->data.get_reservationID()) == reservationId) {
             return true;
         }
         current = current->next;
@@ -67,15 +68,15 @@ bool ReservationManager::findReservation(const std::string& reservationId) const
 
 // This display the waiting list in queue order
 void ReservationManager::displayAllActiveReservation() const {
-    if (waitFront == nullptr) {
+    if (head == nullptr) {
         std::cout << "There are no active reservation.\n";
         return;
     }
 
     std::cout << "--- Active Reservations ---\n";
     Node* current = head;
-    while (current !=) {
-        std::cout << "Reservation ID: " << current->data.getReservationId() << "\n";
+    while (current != nullptr) {
+        std::cout << "Reservation ID: " << current->data.get_reservationID() << "\n";
         current = current->next;
     }
     std::cout << "--------------------\n";
@@ -112,7 +113,7 @@ bool ReservationManager::removeFromWaitingList(const std::string& studentId, con
             }
 
             if (current == waitRear) {
-                waitRer = previous;
+                waitRear = previous;
             }
             
             delete current;
@@ -150,3 +151,13 @@ int ReservationManager::waitingListSize() const {
     return waitCount;
 }
 
+// Reject duplicate IDs and occupied resource/date pairs before undo.
+bool ReservationManager::canRestoreReservation(Reservation reservation) const {
+    for (Node* current = head; current; current = current->next) {
+        if (current->data.get_reservationID() == reservation.get_reservationID() ||
+            (current->data.get_resourceID() == reservation.get_resourceID() &&
+             current->data.get_reservationDate() == reservation.get_reservationDate()))
+            return false;
+    }
+    return true;
+}
