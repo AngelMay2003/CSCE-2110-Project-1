@@ -17,7 +17,7 @@ int main()
     
     vector <Resource> resources;
     
-    ifstream resourceText("resources.txt");
+    ifstream resourceText("data/resources.txt");
     
     string id;
     string name;
@@ -36,7 +36,7 @@ int main()
         resource.set_resourceName(name);
         resource.set_resourceType(type);
         
-        if (availibilyStatus == "Available")
+        if (availabilityStatus == "Available")
         {
             resource.set_availabilityStatus(true);
         }
@@ -51,7 +51,7 @@ int main()
     }
     resourceText.close();
     
-    ifstream reservationText("reservation.txt");
+    ifstream reservationText("data/reservations.txt");
     
     string reservationID;
     string studentID;
@@ -64,7 +64,7 @@ int main()
         getline(reservationText, studentID, '|');
         getline(reservationText, studentName, '|');
         getline(reservationText, resourceID, '|');
-        getline(reservationText, reservationDate);
+        getline(reservationText, date);
         
         Reservation reservation;
         
@@ -90,8 +90,10 @@ int main()
         cout << "3. Cancel Reservation" << endl;
         cout << "4. View Waiting Lists" << endl;
         cout << "5. Undo Cancellation" << endl;
-        cout << "6. Search Reservations" << endl;
-        cout << "7. Exit" << endl;
+        cout << "6. Search using ID" << endl;
+        cout << "7. Sort Reservations/Resources" << endl;
+        cout << "8. Generate Report" << endl;
+        cout << "9. Exit" << endl;
         
         cout << "Enter your choice: ";
         
@@ -99,7 +101,7 @@ int main()
         
         if (menu == 1)
         {
-            for (int i = 0; i < resources.size; i++)
+            for (int i = 0; i < resources.size(); i++)
             {
                 cout << resources[i].get_resourceID() << " | ";
                 cout << resources[i].get_resourceName() << " | ";
@@ -132,6 +134,7 @@ int main()
             cin >> studentID;
             
             cout << "Enter Student Name: ";
+            cin.ignore();
             cin >> studentName;
             
             cout << "Enter Resource ID: ";
@@ -200,35 +203,104 @@ int main()
         }
             
             
-        else if (menu = 6)
+        else if (menu == 6)
         {
-            int reservationID;
+            int search;
             
-            cout << "Enter your reservation id: ";
-            cin >> reservationID
+            cout << "=== Search using ID ===" << endl;
+            cout << "1. Search for resource" << endl;
+            cout << "2. Search for reservation" << endl;
+            cout << "3. Go back to main menu" << endl;
             
-            if (manager.findReservation(reservationID))
+            cout << "Enter choice: " << endl;
+            cin >> search;
+            
+            if (search == 1)
             {
-                cout << "Your reservation has been found." << endl;
+                string resourceID;
+                
+                cout << "Enter your resource ID: ";
+                cin >> resourceID;
+                
+                bool resourceFound = false;
+                
+                for (int i = 0; i < resources.size(); i++)
+                {
+                    if (resources[i].get_resourceID() == resourceID)
+                    {
+                        cout << "Resource has been found" << endl;
+                        resourceFound = true;
+                    }
+                }
+                
+                if (resourceFound == false)
+                {
+                    cout << "Resource was not found" << endl;
+                }
+            }
+            
+            else if (search == 2)
+            {
+                int reservationID;
+                
+                cout << "Enter your reservation ID: ";
+                cin >> reservationID;
+                
+                if (manager.findReservation(reservationID))
+                {
+                    cout << "Your reservation has been found." << endl;
+                }
+                
+                else
+                {
+                    cout << "Your reservation couldn't be found." << endl;
+                }
+            }
+            
+            else if (search == 3)
+            {
+                cout << "Going back to main menu" << endl;
             }
             
             else
             {
-                cout << "Your reservation couldn't be found." << endl;
+                cout << "Invalid input, Re-enter another input" << endl;
             }
+            
         }
         
-        else if (menu = 7)
+            
+            
+        else if (menu == 7)
+        {
+            
+            //Add sorting here
+            
+            
+        }
+        
+        
+        else if (menu == 8)
+        {
+            
+            
+            //Generate Report here
+            
+            
+        }
+        
+        
+        else if (menu == 9)
         {
             cout << "Thanks for using our system." << endl;
         }
         
         else
         {
-            cout << "Invalid: Use menu from 1-8." << endl;
+            cout << "Invalid: Use menu from 1-9." << endl;
         }
         
-    } while (menu != 7);
+    } while (menu != 9);
     
     return 0;
 }
