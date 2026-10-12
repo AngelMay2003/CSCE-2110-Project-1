@@ -279,36 +279,41 @@ int main()
             int sortChoice;
 
             cout << "=== Sort ===" << endl;
-            cout << "1. Resource sorted by name";
-            cout << "2. Reservation sorted by date" << endl;
+            cout << "1. Resource by name";
+            cout << "2. Reservation by date" << endl;
+            cout << "3. Reservation by popularity" << endl;
             cout << "Enter choice: ";
             cin >> sortChoice;
 
             if (sortChoice == 1)
             {
-                if (!resources.empty())
+                if (resources.empty())
                 {
-                    quicksortResources(resources, 0, resources.size() - 1);
+                    cout << "There are no resources." << endl;
                 }
-                for (int i =0; i < resources.size(); i++)
+                else
                 {
+                    quickSortResources(resources, 0, resources.size() - 1);
+                    for (int i =0; i < resources.size(); i++)
+                    {
                     cout << resources[i].get_resourceID() << " | "
                             << resources[i].get_resourceName() << " | "
                             << resources[i].get_resourceType() << endl;
+                    }
                 }
-        }
-        else if (sortChoice == 2)
-        {
-            vector<Reservation> all = manager.getAllReservations();
-
-            if (all.empty())
-            {
-                cout << "There are no active reservations." << endl;
             }
-                else
+            else if (sortChoice == 2)
             {
-                quickSortReservations(all, 0, all.size() - 1);
-                for (int i = 0; i < all.size(); i++)
+                vector<Reservation> all = manager.getAllReservations();
+
+                if (all.empty())
+                {
+                    cout << "There are no active reservations." << endl;
+                }
+                else
+                {
+                    quickSortReservations(all, 0, all.size() - 1);
+                    for (int i = 0; i < all.size(); i++)
                     {
                         cout << "Reservation " << all[i].get_reservationID()
                             << " | " << all[i].get_resourceID()
@@ -316,9 +321,49 @@ int main()
                     }
                 }
             }
+            else if (sortChoice == 3)
+            {
+                vector<Reservation> all = manager.getAllReservations();
+                vector<PopularityEntry> entries;
+
+                // This count how many active reservations of each resource has
+                for (int j = 0; j < resources.size(); j++)
+                {
+                    PopularityEntry entry;
+                    entry.resource = resource[i];
+                    entry.count = 0;
+                    
+                    for (int j = 0; j < all.size(); j++)
+                        {
+                            if (all[j].get_resourceID() == resources[i].get_resourceID())
+                            {
+                            entry.count++;
+                            }
+                        }
+                        entries.push_back(entry);
+                    }
+
+                    if (entries.empty())
+                    {
+                        cout << "There are no resources." << endl;
+                    }
+                    else
+                    {
+                        quickSortPopularity(entries, 0, entries.size() - 1);
+
+                        cout << "--- Resources sorted by popularity ---" << endl;
+                        for (int i = 0; i < entries.size(); i++)
+                        {
+                            cout << entires[i].get_resourceID() << " | "
+                            << entires[i].get_resourceName() << " | "
+                            << entires[i].count << " reservation(s)" << endl;
+                    }
+                }
+            }
+
             else
             {
-            cout << "Invalid choice." << endl;
+                cout << "Invalid choice." << endl;
             }
         }
         
