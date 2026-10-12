@@ -1,6 +1,8 @@
 #ifndef ReservationManager_h
 #define ReservationManager_h
 #include <string>
+#include <vector>
+#include <ostream>
 #include "Reservation.h"
 #include "Resource.h"
 
@@ -63,6 +65,9 @@ class ReservationManager {
    void displayWaitingList() const;
    bool isWaitingListEmpty();
    int waitingListSize() const;
+
+   // Print current system data without changing the lists.
+   void generateReport(const std::vector<Resource>& resources, std::ostream& out) const;
 };
 
 
