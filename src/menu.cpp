@@ -24,7 +24,7 @@ int main()
     string type;
     string availabilityStatus;
     
-    while (getline(resourceText, id, "|"))
+    while (getline(resourceText, id, '|'))
     {
         getline(resourceText, name, '|');
         getline(resourceText, type, '|');
@@ -72,7 +72,7 @@ int main()
         reservation.set_studentID(stoi(studentID)); //changes string to int
         reservation.set_studentName(studentName);
         reservation.set_resourceID(resourceID);
-        reservation.set_reservationDate(date);
+        reservation.set_reservationDate(reservationDate);
         
         manager.addActiveReservation(reservation);
     }
@@ -133,9 +133,10 @@ int main()
             cout << "Enter Student ID: ";
             cin >> studentID;
             
-            cout << "Enter Student Name: ";
             cin.ignore();
-            cin >> studentName;
+            
+            cout << "Enter Student Name (no spaces): ";
+            getline (cin, studentName);
             
             cout << "Enter Resource ID: ";
             cin >> resourceID;
@@ -149,7 +150,7 @@ int main()
             reservation.set_studentID(studentID);
             reservation.set_studentName(studentName);
             reservation.set_resourceID(resourceID);
-            reservation.set_reservationDate(date);
+            reservation.set_reservationDate(reservationDate);
             
             manager.addActiveReservation(reservation);
             
@@ -158,7 +159,7 @@ int main()
         
         else if (menu == 3)
         {
-            int reservationID;
+            string reservationID;
             
             cout << endl;
             cout << "Enter your reservation id: ";
@@ -241,7 +242,7 @@ int main()
             
             else if (search == 2)
             {
-                int reservationID;
+                string reservationID;
                 
                 cout << "Enter your reservation ID: ";
                 cin >> reservationID;
