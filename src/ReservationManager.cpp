@@ -161,3 +161,70 @@ bool ReservationManager::canRestoreReservation(Reservation reservation) const {
     }
     return true;
 }
+
+
+void ReservationManager::generateReport(const std::vector<Resource>& resources, std::ostream& out) const {
+    out << "\n===== SYSTEM REPORT =====\n";
+    out << "\n--- Active Reservations ---\n";
+    int activeCount = 0;
+    for (Node* current = head; current != nullptr; current = current->next) {
+        out << "Reservation " << current->data.get_reservationID()
+            << " | Student " << current->data.get_student()
+            << " | " << current->data.get_studentName()
+            << " | " << current->data.get_resourceID()
+            << " | " << current->data.get_reservationDate() << '\n';
+        activeCount++;
+    }
+    if (activeCount == 0) out << "No active reservations.\n";
+    out << "Total active reservations: " << activeCount << '\n';
+
+    std::vector<int> reservationCounts(resources.size(), 0);
+    std::vector<int> waitingCounts(resources.size(), 0);
+    int highestCount = 0;
+    for (std::size_t i = 0; i < resources.size(); i++) {
+        Resource resource = resources[i];
+        for (Node* current = head; current != nullptr; current = current->next) {
+            if (current->data.get_resourceID() == resource.get_resourceID())
+                reservationCounts[i]++;
+        }
+        for (WaitNode* current = waitFront; current != nullptr; current = current->next) {
+            if (current->resourceId == resource.get_resourceID())
+                waitingCounts[i]++;
+        }
+        if (reservationCounts[i] > highestCount) highestCount = reservationCounts[i];
+    }
+
+    out << "\n--- Resource Utilization and Current Availability ---\n";
+    if (resources.empty()) out << "No resources loaded.\n";
+    for (std::size_t i = 0; i < resources.size(); i++) {
+        Resource resource = resources[i];
+        out << resource.get_resourceID() << " | " << resource.get_resourceName()
+            << " | Active reservations: " << reservationCounts[i]
+            << " | " << (resource.get_availabilityStatus() ? "Available" : "Unavailable") << '\n';
+    }
+
+    // Popularity uses current active reservation counts, not lifetime history.
+    out << "\n--- Most Requested Resources (by active reservations) ---\n";
+    if (highestCount == 0) out << "No reserved resources.\n";
+    else {
+        for (std::size_t i = 0; i < resources.size(); i++) {
+            if (reservationCounts[i] == highestCount) {
+                Resource resource = resources[i];
+                out << resource.get_resourceID() << " | " << resource.get_resourceName()
+                    << " | Reservations: " << highestCount << '\n';
+            }
+        }
+    }
+
+    out << "\n--- Waiting-List Statistics ---\n";
+    if (waitFront == nullptr) out << "No students waiting.\n";
+    for (std::size_t i = 0; i < resources.size(); i++) {
+        Resource resource = resources[i];
+        out << resource.get_resourceID() << " | " << resource.get_resourceName()
+            << " | Waiting requests: " << waitingCounts[i] << '\n';
+    }
+    int waitingTotal = 0;
+    for (WaitNode* current = waitFront; current != nullptr; current = current->next)
+        waitingTotal++;
+    out << "Total waiting requests: " << waitingTotal << '\n';
+}
