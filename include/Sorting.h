@@ -15,4 +15,13 @@ int dateKey(const std::string& d);
 int partitionReservations(std::vector<Reservations>& v, int low, int high);
 void quickSortReservations(std::vector<Reservations>& v, int low, int high);
 
+// Resources by popularity
+struct PopularityEntry {
+  Resource resource;
+  int count;
+};
+
+int partitionPopularity(std::vector<PopularityEntry>& v, int low, int high);
+void quickSortPopularity(std::vector<PopularityEntry>& v, int low, int high);
+
 #endif
