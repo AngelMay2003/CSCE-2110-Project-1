@@ -36,12 +36,12 @@ int dateKey(const std::string& d) {
   return year * 10000 + month * 100 + day;
 }
 
-int partitionResource(std::vector<Resource>& v, int low, int high) {
+int partitionReservations(std::vector<Reservation>& v, int low, int high) {
   int pivot = dateKey(v[high].get_reservationDate());
   int i = low -1;
 
   for (int j = low; j < high; j++) {
-    if (dateKEy(v[j].get_reservationDate()) <= pivot) {
+    if (dateKey(v[j].get_reservationDate()) <= pivot) {
       i++;
       Reservation temp = v[i];
       v[i] = v[j];
@@ -56,7 +56,7 @@ int partitionResource(std::vector<Resource>& v, int low, int high) {
 
 void quickSortReservations(std::vector<Reservation>& v, int low, int high) {
   if (low < high) {
-    int p = partitionReservation(v, low, high);
+    int p = partitionReservations(v, low, high);
     quickSortReservations(v, low, p - 1);
     quickSortReservations(v, p + 1, high);
   }
