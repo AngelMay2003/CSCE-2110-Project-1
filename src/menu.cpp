@@ -326,7 +326,7 @@ int main()
         {
             
             
-            //Generate Report here
+            manager.generateReport(resources, cout);
             
             
         }
