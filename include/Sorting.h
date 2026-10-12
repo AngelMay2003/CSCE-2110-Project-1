@@ -12,8 +12,8 @@ void quickSortResources(std::vector<Resource>& v, int low, int high);
 
 // Reservations by date
 int dateKey(const std::string& d);
-int partitionReservations(std::vector<Reservations>& v, int low, int high);
-void quickSortReservations(std::vector<Reservations>& v, int low, int high);
+int partitionReservations(std::vector<Reservation>& v, int low, int high);
+void quickSortReservations(std::vector<Reservation>& v, int low, int high);
 
 // Resources by popularity
 struct PopularityEntry {
