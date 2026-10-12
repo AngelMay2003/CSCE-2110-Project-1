@@ -61,3 +61,11 @@ void quickSortReservations(std::vector<Reservation>& v, int low, int high) {
     quickSortReservations(v, p + 1, high);
   }
 }
+
+void quickSortPoularity(std::vector<PopularityEntry>& v, int low, int high) {
+  if (low < high) {
+    int p = partitionPopularity(v, low, high);
+    quickSortPopilarity(v, low, p - 1);
+    quickSortPopularity(v, p + 1, high);
+  }
+}
