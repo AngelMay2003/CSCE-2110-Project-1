@@ -7,7 +7,7 @@
 #include "Reservation.h"
 
 // Resource by name
-int partitionResource(std::vector<Resource>& v, int low, int high);
+int partitionResources(std::vector<Resource>& v, int low, int high);
 void quickSortResources(std::vector<Resource>& v, int low, int high);
 
 // Reservations by date
