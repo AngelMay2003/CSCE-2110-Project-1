@@ -1,7 +1,7 @@
 #include "Sorting.h"
 
 // the resource name
-int partitionResource(std::vector<Resource>& v, int low, int high) {
+int partitionResources(std::vector<Resource>& v, int low, int high) {
   std::string pivot = v[high].get_resourceName();
   int i = low - 1;
 
