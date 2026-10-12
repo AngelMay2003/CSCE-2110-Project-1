@@ -282,7 +282,7 @@ int main()
             cout << "1. Resource sorted by name";
             cout << "2. Reservation sorted by date" << endl;
             cout << "Enter choice: ";
-            cin sortChoice;
+            cin >> sortChoice;
 
             if (sortChoice == 1)
             {
@@ -308,7 +308,7 @@ int main()
                 else
             {
                 quickSortReservations(all, 0, all.size() - 1);
-                for (int i = 0; i << all.size(); i++)
+                for (int i = 0; i < all.size(); i++)
                     {
                         cout << "Reservation " << all[i].get_reservationID()
                             << " | " << all[i].get_resourceID()
