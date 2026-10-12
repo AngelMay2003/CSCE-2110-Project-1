@@ -6,6 +6,7 @@
 #include "Reservation.h"
 #include "ReservationManager.h"
 #include "CancellationStack.h"
+#include "Sorting.h"
 
 using namespace std;
 
@@ -275,11 +276,51 @@ int main()
         else if (menu == 7)
         {
             
-            //Add sorting here
-            
-            
+            int sortChoice;
+
+            cout << "=== Sort ===" << endl;
+            cout << "1. Resource sorted by name";
+            cout << "2. Reservation sorted by date" << endl;
+            cout << "Enter choice: ";
+            cin sortChoice;
+
+            if (sortChoice == 1)
+            {
+                if (!resources.empty())
+                {
+                    quicksortResources(resources, 0, resources.size() - 1);
+                }
+                for (int i =0; i < resources.size(); i++)
+                {
+                    cout << resources[i].get_resourceID() << " | "
+                            << resources[i].get_resourceName() << " | "
+                            << resources[i].get_resourceType() << endl;
+                }
         }
-        
+        else if (sortChoice == 2)
+        {
+            vector<Reservation> all = manager.getAllReservations();
+
+            if (all.empty())
+            {
+                cout << "There are no active reservations." << endl;
+            }
+                else
+            {
+                quickSortReservations(all, 0, all.size() - 1);
+                for (int i = 0; i << all.size(); i++)
+                    {
+                        cout << "Reservation " << all[i].get_reservationID()
+                            << " | " << all[i].get_resourceID()
+                            << " | " << all[i].get_reservationDate() << endl;
+                    }
+                }
+            }
+            else
+            {
+            cout << "Invalid choice." << endl;
+            }
+        }
         
         else if (menu == 8)
         {
